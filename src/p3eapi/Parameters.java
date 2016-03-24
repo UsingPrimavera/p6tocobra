@@ -13,9 +13,10 @@ public class Parameters {
 	private String sPassword = null;
 	private String sPathname = null;
 	private String sProjectId = null;
-	private String sTestConnection = null;
+	private Boolean bTestConnection = false;
+	private Boolean bRun = false;
 	private String sDateSource = null;
-	private Boolean bBoolean = null;
+	private Boolean bBoolean = false;
 
 	public Parameters(String[] args) {
 		if (args != null && (args.length == 6)
@@ -24,7 +25,7 @@ public class Parameters {
 			sUsername = args[0];
 			sPassword = args[1];
 			sPathname = args[2];
-			sTestConnection = args[3];
+			requesting(args[3]);
 			sDateSource = args[4];
 			bBoolean = stringToBoolean(args[5]);
 			}
@@ -46,7 +47,8 @@ public class Parameters {
 	public String Password(){ return sPassword;}
 	public String Pathname(){ return sPathname;}
 	public String ProjectId(){ return sProjectId;}
-	public String TestConnection(){ return sTestConnection;}
+	public Boolean TestConnection(){ return bTestConnection;}
+	public Boolean Run() { return bRun;}
 	public String DateSource(){ return sDateSource;}
 	public Boolean Boolean(){ return bBoolean;}
 
@@ -56,6 +58,22 @@ public class Parameters {
 		}
 		else { 
 			return false;
+		}
+	}
+
+	private void requesting(String str) {
+		switch (str) {
+			case "TestConnection": 
+				bTestConnection = true;
+				bRun = false;
+				break;
+			case "Run":
+				bTestConnection = false;
+				bRun = true;
+				break;
+			default:
+				bTestConnection = false;
+				bRun = false;
 		}
 	}
 }
