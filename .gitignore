@@ -1,4 +1,4 @@
-build/
+out/
 lib/
 # vim temporary files
 *.swp
