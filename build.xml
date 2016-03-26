@@ -16,7 +16,6 @@
 
     <property name="reports.out" value="${out}/reports"/>
     <property name="junit.out" value="${reports.out}/junit"/>
-    <property name="testng.out" value="${reports.out}/testng"/>
 
     <path id="production.class.path">
         <pathelement location="${production.classes}"/>
@@ -36,11 +35,6 @@
         </fileset>
     </path>
 
-    <path id="testng.class.path">
-        <fileset dir="${test.lib}">
-            <include name="**/testng*.jar"/>
-        </fileset>
-    </path>
 
     <available file="${out}" property="outputExists"/>
 
@@ -53,7 +47,6 @@
         <mkdir dir="${production.classes}"/>
         <mkdir dir="${test.classes}"/>
         <mkdir dir="${junit.out}"/>
-        <mkdir dir="${testng.out}"/>
         <mkdir dir="${reports.out}"/>
     </target>
 
