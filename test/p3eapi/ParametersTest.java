@@ -12,7 +12,7 @@ public class ParametersTest {
 	}
 
 	@Test
-	public void testRequestParameters() {
+	public void testCorrectTestConnectionParameters() {
 
 		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "TestConnection","s","true"};
 
