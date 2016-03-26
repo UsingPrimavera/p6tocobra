@@ -19,6 +19,7 @@ public class Parameters {
 	private Boolean bBoolean = false;
 
 	public Parameters(String[] args) {
+
 		if (args != null && (args.length == 6)
 				&& args[3].equals("TestConnection")
 				&& args[5].equals("true") ) {
@@ -33,13 +34,10 @@ public class Parameters {
 			sUsername = args[0];
 			sPassword = args[1];
 			sPathname = args[2];
-
-			sProjectId = args[3];
-			for(int i=4; i<(args.length - 1); i++){
-				sProjectId = sProjectId + " " + args[i];
-				}
-
+			requesting(args[3]);
+			sProjectId = extractProjectId(args);
 			sDateSource = args[args.length - 1];
+			bRun = true;
 			}
 		}
 
@@ -56,24 +54,34 @@ public class Parameters {
 		if (str.equals("true")) {
 			return true;
 		}
-		else { 
+		else {
 			return false;
 		}
 	}
 
 	private void requesting(String str) {
 		switch (str) {
-			case "TestConnection": 
+			case "TestConnection":
 				bTestConnection = true;
 				bRun = false;
 				break;
-			case "Run":
-				bTestConnection = false;
-				bRun = true;
-				break;
 			default:
 				bTestConnection = false;
-				bRun = false;
+				bRun = true;
+		}
+	}
+
+	private String extractProjectId(String[] args) {
+		if (args.length == 4) {
+			return args[3];
+		}
+		else {
+			String sProjectId = args[3];
+			for(int i=4; i<(args.length - 1); i++){
+				sProjectId = sProjectId + " " + args[i];
+				}
+			return sProjectId;
+
 		}
 	}
 }
