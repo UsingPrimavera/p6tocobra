@@ -17,13 +17,13 @@ public class ParametersTest {
 		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "TestConnection","s","true"};
 
 		Parameters params = new Parameters(args);
-		assertEquals(args[0], params.Username());
-		assertEquals(args[1], params.Password());
-		assertEquals(args[2], params.Pathname());
-		assertEquals(true, params.TestConnection());
-		assertEquals(args[4],params.DateSource());
-		assertTrue(params.Boolean());
-		assertNull(params.ProjectId());
+		assertEquals(args[0], params.username());
+		assertEquals(args[1], params.password());
+		assertEquals(args[2], params.pathName());
+		assertEquals(true, params.testConnection());
+		assertEquals(args[4],params.dateSource());
+		assertTrue(params.flag());
+		assertNull(params.projectId());
 	}
 
 	@Test
@@ -32,14 +32,14 @@ public class ParametersTest {
 		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "ProjectId","s"};
 
 		Parameters params = new Parameters(args);
-		assertEquals(args[0], params.Username());
-		assertEquals(args[1], params.Password());
-		assertEquals(args[2], params.Pathname());
-		assertEquals(false, params.TestConnection());
+		assertEquals(args[0], params.username());
+		assertEquals(args[1], params.password());
+		assertEquals(args[2], params.pathName());
+		assertEquals(false, params.testConnection());
 		assertEquals(true, params.Run());
-		assertEquals(args[3],params.ProjectId());
-		assertEquals(args[4], params.DateSource());
-		assertFalse(params.Boolean());
+		assertEquals(args[3],params.projectId());
+		assertEquals(args[4], params.dateSource());
+		assertFalse(params.flag());
 	}
 
 }

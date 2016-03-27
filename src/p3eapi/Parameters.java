@@ -11,12 +11,12 @@ public class Parameters {
 
 	private String sUsername = null;
 	private String sPassword = null;
-	private String sPathname = null;
+	private String sPathName = null;
 	private String sProjectId = null;
 	private Boolean bTestConnection = false;
 	private Boolean bRun = false;
 	private String sDateSource = null;
-	private Boolean bBoolean = false;
+	private Boolean bFlag = false;
 
 	public Parameters(String[] args) {
 
@@ -25,15 +25,15 @@ public class Parameters {
 				&& args[5].equals("true") ) {
 			sUsername = args[0];
 			sPassword = args[1];
-			sPathname = args[2];
+			sPathName = args[2];
 			requesting(args[3]);
 			sDateSource = args[4];
-			bBoolean = stringToBoolean(args[5]);
+			bFlag = stringToBoolean(args[5]);
 			}
 		else {
 			sUsername = args[0];
 			sPassword = args[1];
-			sPathname = args[2];
+			sPathName = args[2];
 			requesting(args[3]);
 			sProjectId = extractProjectId(args);
 			sDateSource = args[args.length - 1];
@@ -41,14 +41,14 @@ public class Parameters {
 			}
 		}
 
-	public String Username(){ return sUsername;}
-	public String Password(){ return sPassword;}
-	public String Pathname(){ return sPathname;}
-	public String ProjectId(){ return sProjectId;}
-	public Boolean TestConnection(){ return bTestConnection;}
+	public String username(){ return sUsername;}
+	public String password(){ return sPassword;}
+	public String pathName(){ return sPathName;}
+	public String projectId(){ return sProjectId;}
+	public Boolean testConnection(){ return bTestConnection;}
 	public Boolean Run() { return bRun;}
-	public String DateSource(){ return sDateSource;}
-	public Boolean Boolean(){ return bBoolean;}
+	public String dateSource(){ return sDateSource;}
+	public Boolean flag(){ return bFlag;}
 
 	private Boolean stringToBoolean(String str){
 		if (str.equals("true")) {
