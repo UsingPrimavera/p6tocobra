@@ -76,9 +76,11 @@ public class Parameters {
 		  && args[5].equals("true") ) {
 			isTestConnection = true;
 		  } 
-		else {
+		else if ((args[args.length - 1].equalsIgnoreCase("S"))
+		  || (args[args.length -1].equalsIgnoreCase("B"))) {
 			isRun = true;
 		}
+		
 	}
 
 	private String extractProjectId(String[] args) {
