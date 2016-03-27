@@ -26,7 +26,7 @@ public class Parameters {
 			username = args[0];
 			password = args[1];
 			pathName = args[2];
-			evaluateRequestType(args[3]);
+			evaluateRequestType(args);
 			dateSource = args[4];
 			flag = stringToBoolean(args[5]);
 			}
@@ -34,7 +34,7 @@ public class Parameters {
 			username = args[0];
 			password = args[1];
 			pathName = args[2];
-			evaluateRequestType(args[3]);
+			evaluateRequestType(args);
 			projectId = extractProjectId(args);
 			dateSource = args[args.length - 1];
 			isRun = true;
@@ -59,15 +59,18 @@ public class Parameters {
 		}
 	}
 
-	private void evaluateRequestType(String str) {
-		switch (str) {
-			case "TestConnection":
-				isTestConnection = true;
-				isRun = false;
-				break;
-			default:
-				isTestConnection = false;
-				isRun = true;
+	private void evaluateRequestType(String[] args) {
+
+		isTestConnection = false;
+		isRun = false;
+
+		if ((args.length == 6)
+		  && args[3].equals("TestConnection")
+		  && args[5].equals("true") ) {
+			isTestConnection = true;
+		  } 
+		else {
+			isRun = true;
 		}
 	}
 
