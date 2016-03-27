@@ -9,46 +9,46 @@ package p3eapi;
  * */
 public class Parameters {
 
-	private String sUsername = null;
-	private String sPassword = null;
-	private String sPathName = null;
-	private String sProjectId = null;
-	private Boolean bTestConnection = false;
-	private Boolean bRun = false;
-	private String sDateSource = null;
-	private Boolean bFlag = false;
+	private String username = null;
+	private String password = null;
+	private String pathName = null;
+	private String projectId = null;
+	private Boolean isTestConnection = false;
+	private Boolean isRun = false;
+	private String dateSource = null;
+	private Boolean flag = false;
 
 	public Parameters(String[] args) {
 
 		if (args != null && (args.length == 6)
 				&& args[3].equals("TestConnection")
 				&& args[5].equals("true") ) {
-			sUsername = args[0];
-			sPassword = args[1];
-			sPathName = args[2];
+			username = args[0];
+			password = args[1];
+			pathName = args[2];
 			requesting(args[3]);
-			sDateSource = args[4];
-			bFlag = stringToBoolean(args[5]);
+			dateSource = args[4];
+			flag = stringToBoolean(args[5]);
 			}
 		else {
-			sUsername = args[0];
-			sPassword = args[1];
-			sPathName = args[2];
+			username = args[0];
+			password = args[1];
+			pathName = args[2];
 			requesting(args[3]);
-			sProjectId = extractProjectId(args);
-			sDateSource = args[args.length - 1];
-			bRun = true;
+			projectId = extractProjectId(args);
+			dateSource = args[args.length - 1];
+			isRun = true;
 			}
 		}
 
-	public String username(){ return sUsername;}
-	public String password(){ return sPassword;}
-	public String pathName(){ return sPathName;}
-	public String projectId(){ return sProjectId;}
-	public Boolean testConnection(){ return bTestConnection;}
-	public Boolean Run() { return bRun;}
-	public String dateSource(){ return sDateSource;}
-	public Boolean flag(){ return bFlag;}
+	public String username(){ return username;}
+	public String password(){ return password;}
+	public String pathName(){ return pathName;}
+	public String projectId(){ return projectId;}
+	public Boolean testConnection(){ return isTestConnection;}
+	public Boolean Run() { return isRun;}
+	public String dateSource(){ return dateSource;}
+	public Boolean flag(){ return flag;}
 
 	private Boolean stringToBoolean(String str){
 		if (str.equals("true")) {
@@ -62,12 +62,12 @@ public class Parameters {
 	private void requesting(String str) {
 		switch (str) {
 			case "TestConnection":
-				bTestConnection = true;
-				bRun = false;
+				isTestConnection = true;
+				isRun = false;
 				break;
 			default:
-				bTestConnection = false;
-				bRun = true;
+				isTestConnection = false;
+				isRun = true;
 		}
 	}
 
@@ -76,11 +76,11 @@ public class Parameters {
 			return args[3];
 		}
 		else {
-			String sProjectId = args[3];
+			String projectId = args[3];
 			for(int i=4; i<(args.length - 1); i++){
-				sProjectId = sProjectId + " " + args[i];
+				projectId = projectId + " " + args[i];
 				}
-			return sProjectId;
+			return projectId;
 
 		}
 	}
