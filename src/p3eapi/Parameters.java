@@ -17,25 +17,28 @@ public class Parameters {
 	private Boolean isRun = false;
 	private String dateSource = null;
 	private Boolean flag = false;
+	private Boolean isError = false;
+	private String message = "";
 
 	public Parameters(String[] args) {
 
 		evaluateRequestType(args);
+
 		if (isTestConnection) {
-			username = args[0];
-			password = args[1];
-			pathName = args[2];
+			extractCommonValues(args);
 			dateSource = args[4];
 			flag = stringToBoolean(args[5]);
-			}
-		else {
-			username = args[0];
-			password = args[1];
-			pathName = args[2];
+		}
+		else if (isRun) {
+			extractCommonValues(args);
 			projectId = extractProjectId(args);
 			dateSource = args[args.length - 1];
-			}
 		}
+		else {
+			isError = true;
+			message = "Command line format not recognised";
+		}
+	}
 
 	public String username(){ return username;}
 	public String password(){ return password;}
@@ -45,6 +48,14 @@ public class Parameters {
 	public Boolean Run() { return isRun;}
 	public String dateSource(){ return dateSource;}
 	public Boolean flag(){ return flag;}
+	public Boolean isError() { return isError;}
+	public String message() {return message;}
+
+	private void extractCommonValues(String[] args) {
+		username = args[0];
+		password = args[1];
+		pathName = args[2];
+	}
 
 	private Boolean stringToBoolean(String str){
 		if (str.equals("true")) {
