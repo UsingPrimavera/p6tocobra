@@ -15,6 +15,6 @@ public class TestConnectionJobTest {
 
 		TestConnectionJob job = new TestConnectionJob(new Parameters(args));
 		assertEquals("TestConnection", job.name());
-		assertEquals(AbstractJob.class, job.getClass().getSuperclass());
+		assertEquals(Job.class, job.getClass().getSuperclass());
 	}
 }

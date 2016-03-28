@@ -1,12 +1,12 @@
 package p3eapi;
 
-public abstract class AbstractJob {
+public abstract class Job {
 
 	private Parameters params = null;
 	private Boolean isError = false;
 	private String message = "";
 
-	public AbstractJob(Parameters args) {
+	public Job(Parameters args) {
 
 		this.params = args;
 	}

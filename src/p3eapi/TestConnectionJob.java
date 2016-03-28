@@ -1,6 +1,6 @@
 package p3eapi;
 
-public class TestConnectionJob extends AbstractJob {
+public class TestConnectionJob extends Job {
 
 	public TestConnectionJob(Parameters params) {
 		super(params);

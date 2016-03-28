@@ -15,6 +15,6 @@ public class RunJobTest {
 
 		RunJob job = new RunJob(new Parameters(args));
 		assertEquals("Run", job.name());
-		assertEquals(AbstractJob.class, job.getClass().getSuperclass());
+		assertEquals(Job.class, job.getClass().getSuperclass());
 	}
 }

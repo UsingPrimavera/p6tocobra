@@ -1,6 +1,6 @@
 package p3eapi;
 
-public class RunJob extends AbstractJob {
+public class RunJob extends Job {
 
 	public RunJob(Parameters params) {
 		super(params);
