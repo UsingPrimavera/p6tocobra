@@ -10,14 +10,16 @@ public class P3eAPIExportApp {
 		logger.info("P6ToCobra is released under MIT License");
 		logger.info("P6ToCobra copyright (c) 2016 by Barrie Callender <barrie@callenb.org>");
 		logger.info("P6ToCobra source available at http://github.com/usingp6/p6tocobra");
+		logger.info("Extracting Parameters supplied by Deltek Cobra");
 		Parameters params = new Parameters(args);
 		if (params.isError()) {
 			logger.info(params.message());
 		}
 		else {
-			logger.info("TODO: Acquire the Job Class");
 			logger.info("TODO: Setup the connection parameters");
 			logger.info("TODO: create configuration writer");
+			logger.info("Retrieving requested job");
+			Job job = JobFactory.getJob(params);
 			logger.info("TODO: Execute the job");
 
 		}
