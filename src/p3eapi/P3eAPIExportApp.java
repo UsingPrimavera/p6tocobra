@@ -17,7 +17,6 @@ public class P3eAPIExportApp {
 		}
 		else {
 			logger.info("TODO: Setup the connection parameters");
-			logger.info("TODO: create configuration writer");
 			logger.info("Retrieving requested job");
 			Job job = JobFactory.getJob(params);
 			logger.info("TODO: Execute the job");
