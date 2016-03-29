@@ -42,4 +42,23 @@ public class ParametersTest {
 		assertFalse(params.flag());
 	}
 
+	@Test
+	public void testSpaceInProjectIdRunParameters() {
+
+		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "Project","Id","s"};
+
+		Parameters params = new Parameters(args);
+		assertEquals("Project Id",params.projectId());
+	}
+
+	@Test
+	public void testSpacesInProjectIdRunParameters() {
+
+		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "ProjectId","Has","Three","Spaces","s"};
+
+		Parameters params = new Parameters(args);
+		assertEquals("ProjectId Has Three Spaces",params.projectId());
+
+	}
+
 }
