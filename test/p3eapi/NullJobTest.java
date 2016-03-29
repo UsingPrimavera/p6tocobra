@@ -13,7 +13,7 @@ public class NullJobTest {
 
 		String[] args ={"username","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "MyProjectId","s","true"};
 
-		NullJob job = new NullJob(new Parameters(args));
+		NullJob job = new NullJob(new Parameters(args), new P6Connection());
 		assertEquals("Null", job.name());
 		assertEquals(Job.class, job.getClass().getSuperclass());
 	}

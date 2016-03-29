@@ -13,7 +13,7 @@ public class TestConnectionJobTest {
 
 		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "TestConnection","s","true"};
 
-		TestConnectionJob job = new TestConnectionJob(new Parameters(args));
+		TestConnectionJob job = new TestConnectionJob(new Parameters(args), new P6Connection());
 		assertEquals("TestConnection", job.name());
 		assertEquals(Job.class, job.getClass().getSuperclass());
 	}

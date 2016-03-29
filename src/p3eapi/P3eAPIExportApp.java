@@ -19,7 +19,7 @@ public class P3eAPIExportApp {
 			logger.info("retrieving P6 connection parameters");
 			P6Connection p6 = new P6Connection();
 			logger.info("Retrieving requested job");
-			Job job = JobFactory.getJob(params);
+			Job job = JobFactory.getJob(params,p6);
 			logger.info("TODO: Execute the job");
 
 		}
