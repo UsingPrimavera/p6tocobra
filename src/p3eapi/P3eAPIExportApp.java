@@ -21,8 +21,6 @@ public class P3eAPIExportApp {
 			logger.info("TODO: Execute the job");
 
 		}
-
-
-
+		System.exit(0);
 	}
 }
