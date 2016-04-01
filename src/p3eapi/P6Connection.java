@@ -1,6 +1,5 @@
 package p3eapi;
 
-import com.primavera.integration.client.RMIURL;
 import java.util.Hashtable;
 
 import java.util.logging.Logger;
@@ -13,34 +12,39 @@ import java.util.logging.Logger;
 class P6Connection
 {
   private static Logger logger = Logger.getLogger(P6Connection.class.getName());
+  
+  private Hashtable<String,Integer> modeMap = new Hashtable<String,Integer>();
+
   public static final String LOCAL_MODE = "local";
   public static final String STANDARD_MODE = "standard";
   public static final String SSL_MODE = "ssl";
   public static final String COMPRESSION_MODE = "compression";
-
+  
+  private IRmiUrl p6rmiurl = null;
   private int iCallingMode;
   private String sHostname;
   private int iPort;
-  private Hashtable<String,Integer> modeMap = new Hashtable<String,Integer>();
 
   /**
    * Constructor establishes connection information based on the
    * P3eAPIExportApp.properties file and defaults
    */
-  P6Connection()
+  P6Connection(IRmiUrl rmiurl)
   {
     super();
+
+    this.p6rmiurl = rmiurl;
+
     // set the map up.
-    modeMap.put(LOCAL_MODE,RMIURL.LOCAL_SERVICE);
-    modeMap.put(STANDARD_MODE,RMIURL.STANDARD_RMI_SERVICE);
-    modeMap.put(SSL_MODE,RMIURL.SSL_RMI_SERVICE);
-    modeMap.put(COMPRESSION_MODE,RMIURL.COMPRESSION_RMI_SERVICE);
+    modeMap.put(LOCAL_MODE,p6rmiurl.getLocalService());
+    modeMap.put(STANDARD_MODE,p6rmiurl.getStandardRmiService());
+    modeMap.put(SSL_MODE,p6rmiurl.getSSLRmiService());
+    modeMap.put(COMPRESSION_MODE,p6rmiurl.getCompressionRmiService());
 
     // open the properties file and read in the variables
 
     Configuration props = new Configuration();
     
-    Integer j = null;
     logger.info("property mode=" + props.getProperty("mode",LOCAL_MODE));
     setCallingMode(props.getProperty("mode",LOCAL_MODE));
     setHostname(props.getProperty("hostname","http://localhost"));
@@ -123,7 +127,7 @@ class P6Connection
    */
   public String getRmiUrl() {
 
-      return RMIURL.getRmiUrl(getCallingMode(),getHostname(),getPort());
+      return p6rmiurl.getRmiUrl(getCallingMode(),getHostname(),getPort());
   }
 
 }

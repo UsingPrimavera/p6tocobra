@@ -13,7 +13,7 @@ public class JobFactoryTest {
 
 		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "MyProjectId","s"};
 
-		Job runJob = JobFactory.getJob(new Parameters(args),new P6Connection());
+		Job runJob = JobFactory.getJob(new Parameters(args),new P6Connection(new P6RmiUrl()));
 		assertEquals("Run", runJob.name());
 		assertEquals(Job.class, runJob.getClass().getSuperclass());
 	}
@@ -23,7 +23,7 @@ public class JobFactoryTest {
 
 		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "TestConnection","s","true"};
 
-		Job testConnectionJob = JobFactory.getJob(new Parameters(args),new P6Connection());
+		Job testConnectionJob = JobFactory.getJob(new Parameters(args),new P6Connection(new P6RmiUrl()));
 		assertEquals("TestConnection", testConnectionJob.name());
 		assertEquals(Job.class, testConnectionJob.getClass().getSuperclass());
 	}
@@ -33,7 +33,7 @@ public class JobFactoryTest {
 
 		String[] args ={"username","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "TestConnection","s","true"};
 
-		Job nullJob = JobFactory.getJob(new Parameters(args),new P6Connection());
+		Job nullJob = JobFactory.getJob(new Parameters(args),new P6Connection(new P6RmiUrl()));
 		assertEquals("Null", nullJob.name());
 		assertEquals(Job.class,nullJob.getClass().getSuperclass());
 	}

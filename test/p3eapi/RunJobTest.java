@@ -13,7 +13,7 @@ public class RunJobTest {
 
 		String[] args ={"username","password","c:\\Program Files\\Deltek\\Cobra\\p3eapi", "MyProjectId","s"};
 
-		RunJob job = new RunJob(new Parameters(args), new P6Connection());
+		RunJob job = new RunJob(new Parameters(args), new P6Connection(new P6RmiUrl()));
 		assertEquals("Run", job.name());
 		assertEquals(Job.class, job.getClass().getSuperclass());
 	}
