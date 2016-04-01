@@ -21,6 +21,8 @@ class P6Connection
   public static final String COMPRESSION_MODE = "compression";
   
   private IRmiUrl p6rmiurl = null;
+  private ISession p6session = null;
+  private boolean isLoggedIn = false;
   private int iCallingMode;
   private String sHostname;
   private int iPort;
@@ -29,11 +31,13 @@ class P6Connection
    * Constructor establishes connection information based on the
    * P3eAPIExportApp.properties file and defaults
    */
-  P6Connection(IRmiUrl rmiurl)
+  P6Connection(IRmiUrl rmiurl, ISession session)
   {
     super();
 
     this.p6rmiurl = rmiurl;
+    this.p6session = session;
+    this.isLoggedIn = false;
 
     // set the map up.
     modeMap.put(LOCAL_MODE,p6rmiurl.getLocalService());
@@ -129,5 +133,26 @@ class P6Connection
 
       return p6rmiurl.getRmiUrl(getCallingMode(),getHostname(),getPort());
   }
+
+  public void login(String username, String password) {
+	  String dbase = null;
+	  try {
+		  p6session.login(this.getRmiUrl(),dbase,username, password);
+		  setIsLoggedIn(true);
+	  }
+	  catch (Exception ex)
+	  {
+		  setIsLoggedIn(false);
+	  }
+  }
+
+  private void setIsLoggedIn(boolean bool) {
+	  this.isLoggedIn = bool;
+  }
+
+  public boolean isLoggedIn() {
+	  return this.isLoggedIn;
+  }
+	
 
 }

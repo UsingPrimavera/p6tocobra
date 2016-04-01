@@ -2,7 +2,7 @@ package p3eapi;
 
 import java.util.logging.Logger;
 
-public class P3eAPIExportApp {
+class P3eAPIExportApp {
 
 	private static Logger logger = Logger.getLogger(P3eAPIExportApp.class.getName());
 
@@ -17,7 +17,9 @@ public class P3eAPIExportApp {
 		}
 		else {
 			logger.info("retrieving P6 connection parameters");
-			P6Connection p6 = new P6Connection((IRmiUrl) new P6RmiUrl());
+			IRmiUrl p6RmiUrl = (IRmiUrl) new P6RmiUrl();
+			ISession p6Session = (ISession) new P6Session();
+			P6Connection p6 = new P6Connection(p6RmiUrl, p6Session);
 			logger.info("Retrieving requested job");
 			Job job = JobFactory.getJob(params,p6);
 			logger.info("TODO: Execute the job");
