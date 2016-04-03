@@ -21,13 +21,7 @@ public class ConnectionTest {
 		final IRmiUrl rmiurl = context.mock(IRmiUrl.class);
 
 		// expectations
-		context.checking(new Expectations(){{
-			allowing(rmiurl).getCompressionRmiService(); will(returnValue(2));
-			allowing(rmiurl).getLocalService(); will(returnValue(0));
-			allowing(rmiurl).getSSLRmiService(); will(returnValue(3));
-			allowing(rmiurl).getStandardRmiService(); will(returnValue(1));
-			allowing(rmiurl).getRmiUrl(0, "http://localhost", 9099); will(returnValue(""));
-		}});
+		expectLocalLoginOk(context, rmiurl);
 		
 		// test
 		ISession session = null;
@@ -46,13 +40,7 @@ public class ConnectionTest {
 		final IRmiUrl rmiurl = context.mock(IRmiUrl.class);
 
 		// expectations
-		context.checking(new Expectations(){{
-			allowing(rmiurl).getCompressionRmiService(); will(returnValue(2));
-			allowing(rmiurl).getLocalService(); will(returnValue(0));
-			allowing(rmiurl).getSSLRmiService(); will(returnValue(3));
-			allowing(rmiurl).getStandardRmiService(); will(returnValue(1));
-			allowing(rmiurl).getRmiUrl(0, "http://localhost", 9099); will(returnValue(""));
-		}});
+		expectLocalLoginOk(context, rmiurl);
 
 		context.checking(new Expectations(){{
 			one(session).login("",null,"admin","secret"); will(returnValue(true));
@@ -64,6 +52,19 @@ public class ConnectionTest {
 
 		assertEquals(true, connection.isLoggedIn());
 	}
+
+	private void expectLocalLoginOk(Mockery context, IRmiUrl rmiurl) {
+		context.checking(new Expectations(){{
+			allowing(rmiurl).getCompressionRmiService(); will(returnValue(2));
+			allowing(rmiurl).getLocalService(); will(returnValue(0));
+			allowing(rmiurl).getSSLRmiService(); will(returnValue(3));
+			allowing(rmiurl).getStandardRmiService(); will(returnValue(1));
+			allowing(rmiurl).getRmiUrl(0, "http://localhost", 9099); will(returnValue(""));
+		}});
+	
+
+	}
+
 }
 
 
