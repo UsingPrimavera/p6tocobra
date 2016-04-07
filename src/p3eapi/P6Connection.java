@@ -136,14 +136,15 @@ class P6Connection
 
   public void login(String username, String password) {
 	  String dbase = null;
+	  boolean result = false;
 	  try {
-		  p6session.login(this.getRmiUrl(),dbase,username, password);
-		  setIsLoggedIn(true);
+		  result = p6session.login(this.getRmiUrl(),dbase,username, password);
 	  }
 	  catch (Exception ex)
 	  {
-		  setIsLoggedIn(false);
+		  result = false;
 	  }
+	  setIsLoggedIn(result);
   }
 
   private void setIsLoggedIn(boolean bool) {

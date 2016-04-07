@@ -53,6 +53,28 @@ public class ConnectionTest {
 		assertEquals(true, connection.isLoggedIn());
 	}
 
+	@Test
+	public void testLoginWrongCredentials() {
+		// Setup
+		final ISession session = context.mock(ISession.class);
+		final IRmiUrl rmiurl = context.mock(IRmiUrl.class);
+
+		// expectations
+		expectLocalLoginOk(context, rmiurl);
+
+		context.checking(new Expectations(){{
+			one(session).login("",null,"admin","wrong password"); will(returnValue(false));
+		}});
+
+		//test
+		P6Connection connection = new P6Connection(rmiurl, session);
+		connection.login("admin","wrong password");
+
+		assertEquals(false, connection.isLoggedIn());
+
+
+	}
+
 	private void expectLocalLoginOk(Mockery context, IRmiUrl rmiurl) {
 		context.checking(new Expectations(){{
 			allowing(rmiurl).getCompressionRmiService(); will(returnValue(2));
