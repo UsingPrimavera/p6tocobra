@@ -28,4 +28,7 @@ public class TestConnectionJob extends Job {
 
     public String message() { return this.message;}
 
+    public String getLogfilename() {
+        return params.pathName() + "\\ConnectionFailed.log";
+    }
 }
