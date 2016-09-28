@@ -2,24 +2,14 @@ package p3eapi;
 
 public abstract class Job {
 
-	private Parameters params = null;
-	private P6Connection p6 = null;
-	private Boolean isError = false;
-	private String message = "";
+    public Job(Parameters params, P6Connection p6Conn) {
+    }
 
-	public Job(Parameters args, P6Connection p6con) {
-
-		this.params = args;
-		this.p6 = p6con;
-	}
-
-	public String name() {
-		return "method <name> needs to be overridden in " + this.getClass();
-	}
+	abstract String name();
 
 	abstract Boolean run();
 
-	public Boolean isError() { return isError; }
-	public String message() { return message; }
+	abstract Boolean isError();
+	abstract String message();
 
 }

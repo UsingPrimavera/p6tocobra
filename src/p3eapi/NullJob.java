@@ -9,7 +9,11 @@ public class NullJob extends Job {
 	public String name() { return "Null"; }
 
 	public Boolean run() {
-		return true;
+		return false;
 	}
+
+    public Boolean isError() { return true;}
+
+    public String message() { return "Wrong set of parameters provided";}
 
 }
