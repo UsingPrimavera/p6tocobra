@@ -22,9 +22,18 @@ class P3eAPIExportApp {
 			P6Connection p6 = new P6Connection(p6RmiUrl, p6Session);
 			logger.info("Retrieving requested job");
 			Job job = JobFactory.getJob(params,p6);
-			logger.info("TODO: Execute the job");
-
+            if (!job.run()) {
+                logError(job);
+            }
 		}
 		System.exit(0);
 	}
+
+    private static void logError(Job job) {
+        logger.info("Error running Job: " + job.name());
+
+        PrinterFacade errorLog = new PrinterFacade(job.getLogfilename());
+        errorLog.println(job.message());
+        errorLog.close();
+    }
 }
