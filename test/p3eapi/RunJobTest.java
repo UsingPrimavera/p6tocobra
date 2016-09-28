@@ -18,4 +18,14 @@ public class RunJobTest {
 		assertEquals("Run", job.name());
 		assertEquals(Job.class, job.getClass().getSuperclass());
 	}
+    
+    @Test
+    public void testHasRightLogFilename() {
+        String filename = "c:\\Program Files\\Deltek\\Cobra\\p3eapi";
+        String[] args ={"username","password",filename, "MyProjectId","s"};
+
+		ISession session = null;
+		RunJob job = new RunJob(new Parameters(args), new P6Connection(new P6RmiUrl(), session));
+		assertEquals(filename + "\\p3eapiSpread.log", job.getLogfilename());
+	}   
 }

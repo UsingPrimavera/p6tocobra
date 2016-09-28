@@ -21,4 +21,8 @@ public class RunJob extends Job {
 
     public String message() {return "Nothing";}
 
+    public String getLogfilename() {
+        return params.pathName() + "\\p3eapiSpread.log";
+    }
+
 }
