@@ -11,5 +11,6 @@ public abstract class Job {
 
 	abstract Boolean isError();
 	abstract String message();
+    abstract String getLogfilename();
 
 }
