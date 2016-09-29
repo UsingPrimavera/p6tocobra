@@ -43,7 +43,7 @@ public class ConnectionTest {
 		expectLocalLoginOk(context, rmiurl);
 
 		context.checking(new Expectations(){{
-			one(session).login("",null,"admin","secret"); will(returnValue(true));
+			oneOf(session).login("",null,"admin","secret"); will(returnValue(true));
 		}});
 
 		//test
@@ -63,7 +63,7 @@ public class ConnectionTest {
 		expectLocalLoginOk(context, rmiurl);
 
 		context.checking(new Expectations(){{
-			one(session).login("",null,"admin","wrong password"); will(returnValue(false));
+			oneOf(session).login("",null,"admin","wrong password"); will(returnValue(false));
 		}});
 
 		//test
