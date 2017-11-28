@@ -5,6 +5,8 @@ import com.primavera.integration.client.Session;
 import com.primavera.ServerException;
 import com.primavera.integration.client.ClientException;
 import com.primavera.integration.network.NetworkException;
+import com.primavera.integration.client.GlobalObjectManager;
+import com.primavera.integration.client.EnterpriseLoadManager;
 
 class P6Session implements ISession {
 
@@ -40,6 +42,14 @@ class P6Session implements ISession {
 			return result;
 		}
 
+	}
+
+	public GlobalObjectManager getGlobalObjectManager() {
+		return p6session.getGlobalObjectManager();
+	}
+
+	public EnterpriseLoadManager getEnterpriseLoadManager() {
+		return p6session.getEnterpriseLoadManager();
 	}
 
 
