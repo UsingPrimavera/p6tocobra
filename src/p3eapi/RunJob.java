@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 import com.primavera.integration.client.bo.BOIterator;
 import com.primavera.integration.client.bo.object.ResourceAssignment;
 import com.primavera.ServerException;
-import com.primavera.integration.network.NetworkException;
-import com.primavera.integration.client.bo.BusinessObjectException;
 
 public class RunJob extends Job {
 
@@ -21,10 +19,12 @@ public class RunJob extends Job {
         this.params = params;
         this.p6Conn = p6Conn;
         if (this.params.dateSource()=="B") {
-          this.resourceAssignmentFields = new String[] {"ObjectId","PlannedStartDate","PlannedFinishDate"};
+          String[] fields = {"ObjectId","PlannedStartDate","PlannedFinishDate"};
+          this.resourceAssignmentFields = fields;
         }
         else {
-          this.resourceAssignmentFields = new String[] {"ObjectId","StartDate","FinishDate"};
+          String[] fields = {"ObjectId","StartDate","FinishDate"};
+          this.resourceAssignmentFields = fields;
 
         }
 	}
@@ -32,44 +32,22 @@ public class RunJob extends Job {
 	public String name() { return "Run"; }
 
 	public Boolean run() {
-
     Boolean retval = false;
-    ResourceAssignment resAss = null;
-    ResourceAssignment loadedResAss = null;
 
+    // connect to P6 database
     this.p6Conn.login(this.params.username(), this.params.password());
     if ( this.p6Conn.isLoggedIn()) {
+    //   Determine if Project or Baseline
       IProject project = this.p6Conn.getProjectOrBaseline(params.projectId());
       BOIterator<ResourceAssignment> boiResAss = project.getResourceAssignments(this.resourceAssignmentFields);
       while (boiResAss.hasNext()) {
-        resAss = boiResAss.next();
-        if (this.params.dateSource()=="B") {
-          loadedResAss = ResourceAssignment.loadWithLiveSpread(
-              session,
-              this.resourceAssignmentFields,
-              resAss.getObjectId(),
-              new String[] {"RemainingUnits","RemainingCost","PlannedUnits","PlannedCost"},
-              SpreadPeriodType.DAY,
-              resAss.getPlannedStartDate(),
-              resAss.getPlannedFinishDate(),
-              false);
-        }
-        else {
-          loadedResAss = ResourceAssignment.loadWithLiveSpread(
-              session,
-              this.resourceAssignmentFields,
-              resAss.getObjectId(),
-              new String[] {"RemainingUnits","RemainingCost","AtCompletionUnits","AtCompletionCosts"},
-              SpreadPeriodType.DAY,
-              resAss.getStartDate(),
-              resAss.getFinishDate(),
-              false);
-        }
-          //    For Each Resource Assignment Spread
 
-          //      Extract data and ssave to csv
+        //    load the resource assignment spread
+
+        //    For Each Resource Assignment Spread
+
+        //      Extract data and ssave to csv
       }
-
     }
 		return retval;
 	}
