@@ -8,6 +8,9 @@ import com.primavera.integration.client.EnterpriseLoadManager;
 import com.primavera.integration.client.bo.BOIterator;
 import com.primavera.integration.client.bo.object.Project;
 import com.primavera.integration.client.bo.object.BaselineProject;
+import com.primavera.integration.client.bo.object.ResourceAssignment;
+import com.primavera.common.value.BeginDate;
+import com.primavera.common.value.EndDate;
 import com.primavera.ServerException;
 import com.primavera.integration.network.NetworkException;
 import com.primavera.integration.client.bo.BusinessObjectException;
@@ -190,6 +193,10 @@ class P6Connection
     logger.info(ex.toString());
   }
     return project;
+  }
+
+  public ResourceAssignment loadSpread(ResourceAssignment resAss, String[] staticFields, String[] spreadFields, BeginDate startDate, EndDate finishDate) {
+    return p6session.loadSpread(resAss, staticFields, spreadFields, startDate, finishDate);
   }
 
   private void setIsLoggedIn(boolean bool) {
