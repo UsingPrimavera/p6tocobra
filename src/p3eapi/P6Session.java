@@ -52,5 +52,9 @@ class P6Session implements ISession {
 		return p6session.getEnterpriseLoadManager();
 	}
 
+	public Session getSession() {
+		return p6session;
+	}
+
 
 }
