@@ -7,11 +7,19 @@ public class RunJob extends Job {
 
   private Parameters params = null;
   private P6Connection p6Conn = null;
+  private String[] resourceAssignmentFields = null;
 
 	public RunJob(Parameters params, P6Connection p6Conn) {
 		super(params, p6Conn);
         this.params = params;
         this.p6Conn = p6Conn;
+        if (this.params.datesource()=="B") {
+          this.resourceAssignmentFields = ["ObjectId","PlannedStartDate","PlannedFinishDate"];
+        }
+        else {
+          this.resourceAssignmentFields = ["ObjectId","StartDate","FinishDate"];
+
+        }
 	}
 
 	public String name() { return "Run"; }
@@ -24,16 +32,22 @@ public class RunJob extends Job {
     if ( this.p6Conn.isLoggedIn()) {
     //   Determine if Project or Baseline
       IProject project = this.p6Conn.getProjectOrBaseline(params.projectId());
+      try {
+        BOIterator<ResourceAssignment> boiResAss = project.getResourceAssignments(this.resourceAssignmentFields);
+        while (boiResAss.hasNext()) {
 
-    //   Get all Resource assignments
+          //    load the resource assignment spread
 
-    //   for each Resource assignments
+          //    For Each Resource Assignment Spread
 
-    //    load the resource assignment spread
+          //      Extract data and ssave to csv
+        }
 
-    //    For Each Resource Assignment Spread
-
-    //      Extract data and ssave to csv
+      }
+      catch (ServerException ex) {
+          logger.info("Primavera ServerException error retrieving iterating over Resource Assignments");
+          logger.info(ex.toString());
+      }
     }
 		return retval;
 	}
