@@ -11,6 +11,7 @@ import com.primavera.integration.client.bo.object.BaselineProject;
 import com.primavera.ServerException;
 import com.primavera.integration.network.NetworkException;
 import com.primavera.integration.client.bo.BusinessObjectException;
+import com.primavera.integration.client.Session;
 
 /**
  * Holds all the information about how to connect to the Primavera API.
@@ -190,6 +191,10 @@ class P6Connection
     logger.info(ex.toString());
   }
     return project;
+  }
+
+  public Session getSession() {
+    return this.p6session.getSession();
   }
 
   private void setIsLoggedIn(boolean bool) {
