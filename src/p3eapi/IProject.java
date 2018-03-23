@@ -5,4 +5,5 @@ import com.primavera.integration.client.bo.object.ResourceAssignment;
 
 interface IProject {
 	public BOIterator<ResourceAssignment> getResourceAssignments(String[] fields);
+	public String getName();
 }

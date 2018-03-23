@@ -41,4 +41,13 @@ public class P6Project implements IProject {
     return retval;
   }
 
+  public String getName() {
+    try {
+      return this.p6project.getName();
+    }
+    catch (BusinessObjectException e) {
+      return "NAME NOT RETRIEVED";
+    }
+  }
+
 }
