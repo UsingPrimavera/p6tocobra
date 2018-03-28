@@ -1,0 +1,29 @@
+# p6tocobra -- Drop-in replacement for Deltek Cobra's P6 Integration
+# Copyright (c) 2018 Barrie Gordon Callender
+#
+# This file contains the configuration directives for P6tocobra.
+# A line starting with the hash (#) character is a comment and so is ignored.
+# When no options are set, it operates exactly the same as the integration from
+# Deltek that it replaces.
+#
+
+# The 'mode' tells p6tocobra how it can connect to Primavera P6.
+# local - is the default and uses the Primavera API in local mode
+# standard - will make use of a Primavera Integration server
+#
+#mode=standard
+mode=local
+
+# The 'hostname' is required when 'mode' is set to 'standard'.  It should be set
+# to the domain name or IP address of the Primavera Integration Server.
+#
+#hostname=192.168.0.75
+#houstname=mydomaninname.com
+#
+hostname=localhost
+
+# The 'port' defines which port the Primavera Integration Server is listening
+# on.  This is normally 9099.  If you have changed the port number for your
+# installation just set the new one here
+#
+port=9099
