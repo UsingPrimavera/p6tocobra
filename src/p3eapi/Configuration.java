@@ -5,8 +5,7 @@ import java.util.Properties;
 
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.util.logging.Level;
@@ -20,21 +19,21 @@ import java.util.logging.Logger;
  */
 public class Configuration {
 
-    private static String propertyFileName = "p6tocobra.class";
+    private static String propertyFileName = "p6tocobra.properties";
     private Properties props = null;
 
     public Configuration() {
 
       Properties defaultProps = new Properties();
       defaultProps.setProperty("mode", "local");
-      defaultProps.setProperty("hostname", "http://localhost");
+      defaultProps.setProperty("hostname", "localhost");
       defaultProps.setProperty("port", "9099");
       defaultProps.setProperty("RMIServerMode", "Standard");
       defaultProps.setProperty("keep", "y");
       props = new Properties(defaultProps);
       try {
-	      URI uri = new URI(whereAmI() + "/" + propertyFileName);
-	      File file = new File( uri);
+
+        File file = createFile(whereAmI() + "/" + propertyFileName);
 	      FileInputStream in = new FileInputStream(file);
 	      props.load(in);
 	      in.close();
@@ -42,13 +41,10 @@ public class Configuration {
       catch (java.io.IOException ex) {
         Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
       }
-      catch (java.net.URISyntaxException ex) {
-        Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
-      }
     }
 
     public String getProperty(String key, String def) {
-        
+
         String ret = props.getProperty(key);
 
         if (ret == null) {ret = def;}
@@ -57,14 +53,32 @@ public class Configuration {
     }
 
     public String getProperty(String key) {
-        
+
         String ret = this.getProperty(key, null);
         return ret;
     }
 
 
     public String whereAmI() {
-      ClassLoader loader = P6Connection.class.getClassLoader();
-      return loader.getResource("p3eapi").toString();
+      //ClassLoader loader = P6Connection.class.getClassLoader();
+      //return loader.getResource("p3eapi").toString();
+      return System.getProperty("user.dir");
+  }
+
+  private File createFile(String filename) {
+
+    File file = null;
+    boolean isCreated = false;
+
+    try {
+      file = new File(filename);
+      if (file.exists()) return file;
+      isCreated = file.createNewFile();
+    }
+    catch (IOException ex) {
+      System.out.println("createFile() Error while creating a new empty file :" + ex);
+    }
+
+    return file;
   }
 }

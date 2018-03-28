@@ -2,8 +2,6 @@ package p3eapi;
 
 import java.util.Properties;
 import java.util.HashMap;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
@@ -15,30 +13,34 @@ import org.junit.Test;
 
 public class ConfigFileTest {
 
+  private String _propertiesFile = System.getProperty("user.dir") + "/" + "p6tocobra.properties";
+
+
 	public ConfigFileTest() {
 	}
 
 	@Test
 	public void testConfigurationClosesFile() {
 
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("mode","standard");
+		Properties testProps = new Properties();
+    testProps.setProperty("mode","standard");
 
-		File file =createConfigFile(map);
+		File file = createConfigFile(testProps);
 
 		Configuration config = new Configuration();
 
-		assertTrue(deleteFile(whereAmI() + "/" + "p6tocobra.class"));
+    assertTrue(file.exists());
+		assertEquals(true,file.delete());
 	}
 
 	@Test
 	public void testMissingFileReturnsDefaults() {
 
-		deleteFile(whereAmI() + "/" + "p6tocobra.class");
+		deleteFile(_propertiesFile);
 		Configuration config = new Configuration();
 
 		assertEquals("local", config.getProperty("mode"));
-		assertEquals("http://localhost", config.getProperty("hostname"));
+		assertEquals("localhost", config.getProperty("hostname"));
 		assertEquals("9099", config.getProperty("port"));
 		assertEquals("Standard", config.getProperty("RMIServerMode"));
 		assertEquals("y", config.getProperty("keep"));
@@ -48,95 +50,75 @@ public class ConfigFileTest {
 	@Test
 	public void testValuesFromFile() {
 
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("mode","standard");
-		map.put("hostname","http://example.com");
-		map.put("port","1234");
-		map.put("RMIServerMode","Custom");
-		map.put("keep","n");
+    Properties testProps = new Properties();
+    testProps.setProperty("mode","standard");
+    testProps.setProperty("hostname","example.com");
+		testProps.setProperty("port","1234");
+		testProps.setProperty("RMIServerMode","Custom");
+		testProps.setProperty("keep","n");
 
-		File file =createConfigFile(map);
+		File file =createConfigFile(testProps);
 
 		Configuration config = new Configuration();
 
-		assertEquals(map.get("mode"), config.getProperty("mode"));
-		assertEquals(map.get("hostname"), config.getProperty("hostname"));
-		assertEquals(map.get("port"), config.getProperty("port"));
-		assertEquals(map.get("RMIServerMode"), config.getProperty("RMIServerMode"));
-		assertEquals(map.get("keep"), config.getProperty("keep"));
+		assertEquals(testProps.getProperty("mode"), config.getProperty("mode"));
+		assertEquals(testProps.getProperty("hostname"), config.getProperty("hostname"));
+		assertEquals(testProps.getProperty("port"), config.getProperty("port"));
+		assertEquals(testProps.getProperty("RMIServerMode"), config.getProperty("RMIServerMode"));
+		assertEquals(testProps.getProperty("keep"), config.getProperty("keep"));
+    deleteFile(_propertiesFile);
 	}
 
-	private String whereAmI() {
-		ClassLoader loader = P6Connection.class.getClassLoader();
-		return loader.getResource("p3eapi").toString();
-	}
+  @Test
+  public void testMixedDefaultCustomValues() {
 
-	private File createFile(String uri) {
+    Properties testProps = new Properties();
+    testProps.setProperty("mode","standard");
+		testProps.setProperty("port","1234");
+		testProps.setProperty("keep","n");
 
-		File file = null;
-		boolean isCreated = false;
+		File file =createConfigFile(testProps);
 
-		try {
-			file = new File(new URI(uri));
-			if (file.exists()) return file;
-			isCreated = file.createNewFile();
-		}
-		catch (URISyntaxException ex) {
-			System.out.println("createFile() URI Syntax Exception :" + ex);
-		}
-		catch (IOException ex) {
-			System.out.println("Error while creating a new empty file :" + ex);
-		}
+		Configuration config = new Configuration();
 
-		return file;
-	}
+		assertEquals(testProps.getProperty("mode"), config.getProperty("mode"));
+		assertEquals("localhost", config.getProperty("hostname"));
+		assertEquals(testProps.getProperty("port"), config.getProperty("port"));
+		assertEquals("Standard", config.getProperty("RMIServerMode"));
+		assertEquals(testProps.getProperty("keep"), config.getProperty("keep"));
+    deleteFile(_propertiesFile);
 
-	private boolean deleteFile(String uri) {
-		
+  }
+	private void deleteFile(String filename) {
 
-		File file = null;
-		boolean isDeleted = false;
-
-		try {
-			file = new File(new URI(uri));
-			isDeleted = file.delete();
-		}
-		catch (URISyntaxException ex) {
-			System.out.println("deleteFile() URI Syntax Exception :" + ex);
-		}
-
-		return isDeleted;
+  	File file = new File(filename);
+	 	file.delete();
 
 	}
 
-	private File createConfigFile(HashMap<String, String> map) {
+	private File createConfigFile(Properties configProps) {
 
-		Properties props = new Properties();
-		props.setProperty("mode",map.getOrDefault("mode",""));
-		props.setProperty("hostname",map.getOrDefault("hostname",""));
-		props.setProperty("port",map.getOrDefault("port",""));
-		props.setProperty("RMIServerMode",map.getOrDefault("RMIServerMode",""));
-		props.setProperty("keep",map.getOrDefault("keep",""));
+    File file = new File(_propertiesFile);
 
-		String filename = whereAmI() + "/" + "p6tocobra.class";
-		File file =createFile(filename);
+    try {
+      if (file.exists()) {
+        file.delete();
+        file.createNewFile();
+      }
 
-		try {
-			FileOutputStream out = new FileOutputStream(file);
-			props.store(out,"-- Created by ConfigFileTest.testValuesFromFile ---");
-			out.close();
-		} 
-		catch (FileNotFoundException ex) {
-			assertTrue("FileNotFoundException has been caught unexpectedly for" + filename,false);
-		}
-		catch (IOException ex) {
-			assertTrue("IOException has been caught unexpectedly", false);
-		}
+      FileOutputStream out = new FileOutputStream(file);
+      configProps.store(out, "---Testing---");
+      out.close();
+    }
+    catch (FileNotFoundException ex) {
+      System.out.println("FileNotFoundException writing appProperties");
+    }
+    catch (IOException ex) {
+      System.out.println("IOException writing defaultProperties");
+    }
 
 		return file;
 
 	}
-
-
 
 }
