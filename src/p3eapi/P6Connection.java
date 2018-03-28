@@ -60,7 +60,7 @@ class P6Connection
 
     logger.info("property mode=" + props.getProperty("mode",LOCAL_MODE));
     setCallingMode(props.getProperty("mode",LOCAL_MODE));
-    setHostname(props.getProperty("hostname","http://localhost"));
+    setHostname(props.getProperty("hostname","localhost"));
     setPort(new Integer(props.getProperty("port","9099")) );
 
   }
@@ -108,7 +108,7 @@ class P6Connection
    * @return
    */
   public String setHostname(String Hostname) {
-      sHostname = Hostname;
+      sHostname = "http://" + Hostname;
       return getHostname();
   }
 
